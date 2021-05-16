@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @AutoConfigureMockMvc
 class HelloControllerTest(@Autowired val mvc: MockMvc) {
 
-    @Throws(Exception::class)
     @Test
     fun hello() {
         mvc.perform(get("/hello").accept(MediaType.APPLICATION_JSON))
