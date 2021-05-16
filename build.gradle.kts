@@ -9,7 +9,7 @@ plugins {
 	kotlin("plugin.serialization") version "1.5.0"
 }
 
-group = "com.example"
+group = "be.yellowduck.sports"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
