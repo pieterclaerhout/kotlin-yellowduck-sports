@@ -15,7 +15,7 @@ import java.time.ZoneOffset
 import java.util.*
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class RouteRepositoryTests {
 
     @MockkBean
