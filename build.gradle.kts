@@ -7,6 +7,7 @@ plugins {
 	kotlin("plugin.spring") version "1.5.0"
 	kotlin("plugin.jpa") version "1.5.0"
 	kotlin("plugin.serialization") version "1.5.0"
+	jacoco
 }
 
 group = "be.yellowduck.sports"
@@ -42,6 +43,18 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+jacoco {
+	toolVersion = "0.8.7"
+}
+
+tasks.test {
+	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+
+tasks.jacocoTestReport {
+	dependsOn(tasks.test) // tests are required to run before generating the report
 }
 
 extensions.findByName("buildScan")?.withGroovyBuilder {

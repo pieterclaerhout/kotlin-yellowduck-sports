@@ -1,13 +1,11 @@
 package be.yellowduck.sports.model
 
-import be.yellowduck.sports.utils.Coordinate
-import be.yellowduck.sports.utils.PolylineUtils
+import be.yellowduck.sports.gpx.TrackPoint
+import be.yellowduck.sports.gpx.Polyline
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.data.repository.findByIdOrNull
 import java.time.LocalDateTime
@@ -22,11 +20,11 @@ class RouteRepositoryTests {
     private lateinit var routeRepository: RouteRepository
 
     val now = LocalDateTime.ofEpochSecond(1621174415, 0, ZoneOffset.UTC)
-    val polyline = PolylineUtils.encode(
+    val polyline = Polyline.encode(
         listOf(
-            Coordinate(longitude = 16.34528, latitude = 48.1969),
-            Coordinate(longitude = 16.34725, latitude = 48.19732),
-            Coordinate(longitude = 16.40988, latitude = 48.22858)
+            TrackPoint(lon = 16.34528, lat = 48.1969),
+            TrackPoint(lon = 16.34725, lat = 48.19732),
+            TrackPoint(lon = 16.40988, lat = 48.22858)
         )
     )
 

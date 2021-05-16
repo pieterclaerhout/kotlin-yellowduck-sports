@@ -1,18 +1,18 @@
-package be.yellowduck.sports.utils
+package be.yellowduck.sports.gpx
 
-class PolylineUtils {
+class Polyline {
 
     companion object {
 
-        fun encode(coords: List<Coordinate>): String {
+        fun encode(coords: List<TrackPoint>): String {
             val result: MutableList<String> = mutableListOf()
 
             var prevLat = 0
             var prevLong = 0
 
-            for ((long, lat) in coords) {
-                val iLat = (lat * 1e5).toInt()
-                val iLong = (long * 1e5).toInt()
+            for (coord in coords) {
+                val iLat = (coord.lat * 1e5).toInt()
+                val iLong = (coord.lon * 1e5).toInt()
 
                 val deltaLat = encodeValue(iLat - prevLat)
                 val deltaLong = encodeValue(iLong - prevLong)
@@ -25,6 +25,7 @@ class PolylineUtils {
             }
 
             return result.joinToString("")
+
         }
 
         private fun encodeValue(value: Int): String {
@@ -44,7 +45,14 @@ class PolylineUtils {
             return chunks
         }
 
-        fun decode(polyline: String): List<Coordinate> {
+        fun decodeToGPX(polyline: String, name: String=""): Document{
+            val points = decode(polyline)
+            val segment = Segment(points = points.toMutableList())
+            val track = Track(name = name, segments = mutableListOf(segment))
+            return Document(name = name, tracks = mutableListOf(track))
+        }
+
+        fun decode(polyline: String): List<TrackPoint> {
 
             val coordinateChunks: MutableList<MutableList<Int>> = mutableListOf()
             coordinateChunks.add(mutableListOf())
@@ -79,7 +87,7 @@ class PolylineUtils {
                 coordinates.add((coordinate).toDouble() / 100000.0)
             }
 
-            val points: MutableList<Coordinate> = mutableListOf()
+            val points: MutableList<TrackPoint> = mutableListOf()
             var previousX = 0.0
             var previousY = 0.0
 
@@ -92,7 +100,12 @@ class PolylineUtils {
                 previousX += coordinates[i + 1]
                 previousY += coordinates[i]
 
-                points.add(Coordinate(round(previousX, 5), round(previousY, 5)))
+                points.add(
+                    TrackPoint(
+                        lon = round(previousX, 5),
+                        lat = round(previousY, 5)
+                    )
+                )
             }
 
             return points
@@ -102,7 +115,7 @@ class PolylineUtils {
         private fun round(value: Double, precision: Int) =
             (value * Math.pow(10.0, precision.toDouble())).toInt().toDouble() / Math.pow(10.0, precision.toDouble())
 
-        fun simplify(points: List<Coordinate>, epsilon: Double): List<Coordinate> {
+        fun simplify(points: List<TrackPoint>, epsilon: Double): List<TrackPoint> {
 
             var dmax = 0.0
             var index = 0
@@ -117,8 +130,8 @@ class PolylineUtils {
             }
 
             return if (dmax > epsilon) {
-                val recResults1: List<Coordinate> = simplify(points.subList(0, index + 1), epsilon)
-                val recResults2: List<Coordinate> = simplify(points.subList(index, end), epsilon)
+                val recResults1: List<TrackPoint> = simplify(points.subList(0, index + 1), epsilon)
+                val recResults2: List<TrackPoint> = simplify(points.subList(index, end), epsilon)
                 listOf(recResults1.subList(0, recResults1.lastIndex), recResults2).flatMap { it.toList() }
             } else {
                 listOf(points[0], points[end - 1])
@@ -126,14 +139,15 @@ class PolylineUtils {
 
         }
 
-        private fun perpendicularDistance(pt: Coordinate, lineFrom: Coordinate, lineTo: Coordinate): Double =
-            Math.abs((lineTo.longitude - lineFrom.longitude) * (lineFrom.latitude - pt.latitude) - (lineFrom.longitude - pt.longitude) * (lineTo.latitude - lineFrom.latitude)) /
+        private fun perpendicularDistance(pt: TrackPoint, lineFrom: TrackPoint, lineTo: TrackPoint): Double {
+            return Math.abs((lineTo.lon - lineFrom.lon) * (lineFrom.lat - pt.lat) - (lineFrom.lon - pt.lon) * (lineTo.lat - lineFrom.lat)) /
                     Math.sqrt(
                         Math.pow(
-                            lineTo.longitude - lineFrom.longitude,
+                            lineTo.lon - lineFrom.lon,
                             2.0
-                        ) + Math.pow(lineTo.latitude - lineFrom.latitude, 2.0)
+                        ) + Math.pow(lineTo.lat - lineFrom.lat, 2.0)
                     )
+        }
 
     }
 
