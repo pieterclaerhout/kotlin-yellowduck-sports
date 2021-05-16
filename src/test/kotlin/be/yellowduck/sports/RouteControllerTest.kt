@@ -73,7 +73,7 @@ class RouteControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun oneExistingGPX() {
-        mockMvc.perform(get("/api/route/1/gpx").accept("application/gpx+xml"))
+        mockMvc.perform(get("/api/route/1/gpx").accept("*"))
             .andExpect(status().isOk)
             .andExpect(content().contentType("application/gpx+xml;charset=UTF-8"))
             .andExpect(content().string("""<?xml version="1.0" ?>

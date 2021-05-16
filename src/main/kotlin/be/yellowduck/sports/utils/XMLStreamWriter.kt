@@ -2,6 +2,8 @@ package be.yellowduck.sports.utils
 
 import javax.xml.stream.XMLStreamWriter
 
+// https://github.com/dnowak/kotlin-xml-writer/blob/master/src/main/kotlin/pl/schibsted/xml/stream/step04.kt
+
 fun XMLStreamWriter.document(init: XMLStreamWriter.() -> Unit): XMLStreamWriter {
     this.writeStartDocument()
     this.init()
