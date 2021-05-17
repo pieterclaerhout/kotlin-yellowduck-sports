@@ -6,6 +6,7 @@ import java.io.FileInputStream
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import javax.xml.parsers.DocumentBuilder
 import javax.xml.parsers.DocumentBuilderFactory
 
 class Parser {
@@ -14,19 +15,64 @@ class Parser {
 
         val fis = FileInputStream(path)
 
-        var gpx = Document(path)
+        val gpx = Document(path)
 
         val dbFactory = DocumentBuilderFactory.newInstance()
         val dBuilder = dbFactory.newDocumentBuilder()
-        val xmlInput = InputSource(fis)
-        val doc = dBuilder.parse(xmlInput)
 
-        for (item in doc.getElementsByTagName("trk").items()) {
-            val track = parseTrack(item)
-            gpx.tracks.add(track)
+        try {
+
+            val xmlInput = InputSource(fis)
+            val doc = dBuilder.parse(xmlInput)
+
+            if (!doc.hasChildNodes()) {
+                throw Exception("Empty GPX document")
+            }
+
+            if (doc.firstChild.nodeName != "gpx") {
+                throw Exception("Not a GPX document")
+            }
+
+            gpx.version = parseVersion(doc)
+            gpx.creator = parseCreator(doc)
+
+            for (item in doc.getElementsByTagName("trk").items()) {
+                val track = parseTrack(item)
+                gpx.tracks.add(track)
+            }
+
+        } catch (e: Exception) {
+            if (e.message == "Premature end of file.") {
+                throw Exception("Empty GPX document")
+            }
+            throw e
         }
 
         return gpx
+
+    }
+
+    private fun parseVersion(doc: org.w3c.dom.Document): String {
+        val node = doc.firstChild
+        return node.stringAttribute("version")
+    }
+
+    private fun parseCreator(doc: org.w3c.dom.Document): String {
+
+        val node = doc.firstChild
+
+        val creator = node.stringAttribute("creator")
+        if (!creator.isNullOrBlank()) {
+            return creator
+        }
+
+        for (metadata in node.childrenByName("metadata")) {
+            for (child in metadata.childrenByName("creator")) {
+                return child.textContent
+            }
+        }
+
+        return ""
 
     }
 

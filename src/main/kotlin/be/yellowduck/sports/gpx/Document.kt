@@ -4,10 +4,12 @@ import com.sun.xml.txw2.output.IndentingXMLStreamWriter
 import java.io.ByteArrayOutputStream
 import javax.xml.stream.XMLOutputFactory
 
-data class Document (
+data class Document(
     val path: String = "",
-    val name: String = "",
-    val tracks: MutableList<Track> = mutableListOf()
+    var name: String = "",
+    var version: String = "",
+    var creator: String = "",
+    var tracks: MutableList<Track> = mutableListOf()
 ) {
 
     fun toGPXString(): String {
@@ -18,9 +20,18 @@ data class Document (
         writer.setIndentStep("  ")
         writer.document {
             element("gpx") {
-                attribute("version", "1.1")
-                attribute("creator" , "sports.yellowduck.be")
-                attribute("xmlns", "http://www.topografix.com/GPX/1/1")
+                if (!version.isNullOrBlank()) {
+                    attribute("version", version)
+                }
+                if (!creator.isNullOrBlank()) {
+                    attribute("creator", creator)
+                }
+                if (version == "1.0") {
+                    attribute("xmlns", "http://www.topografix.com/GPX/1/0")
+                }
+                if (version == "1.1") {
+                    attribute("xmlns", "http://www.topografix.com/GPX/1/1")
+                }
                 if (!name.isNullOrBlank()) {
                     element("metadata") {
                         element("name", name)

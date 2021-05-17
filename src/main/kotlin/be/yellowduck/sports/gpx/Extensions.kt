@@ -32,6 +32,10 @@ internal fun Node.doubleAttribute(name: String) : Double {
     return this.attributes.getNamedItem(name).nodeValue.toDoubleOrNull() ?: 0.0
 }
 
+internal fun Node.stringAttribute(name: String) : String {
+    return this.attributes.getNamedItem(name).nodeValue ?: ""
+}
+
 internal fun XMLStreamWriter.document(init: XMLStreamWriter.() -> Unit): XMLStreamWriter {
     this.writeStartDocument()
     this.init()

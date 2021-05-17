@@ -1,9 +1,8 @@
 package be.yellowduck.sports.gpx
 
-import be.yellowduck.sports.gpx.Parser
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.io.File
+import org.junit.jupiter.api.assertThrows
 import java.time.ZoneOffset
 
 class ParserTests {
@@ -16,7 +15,9 @@ class ParserTests {
         val parser = Parser()
 
         val gpx = parser.parse(path)
-        assertThat(gpx.tracks).isNotNull()
+        assertThat(gpx.version).isEqualTo("1.1")
+        assertThat(gpx.creator).isEqualTo("StravaGPX")
+        assertThat(gpx.tracks).isNotNull
         assertThat(gpx.tracks.size).isEqualTo(1)
 
         val track = gpx.tracks.first()
@@ -34,13 +35,29 @@ class ParserTests {
 
     }
 
+//    @Test
+//    fun testAllFiles() {
+//        File("src/test/resources").walk().filter { it.name.endsWith(".gpx") }.forEach {
+//            println(it.absolutePath)
+//        }
+//    }
+
     @Test
-    fun testAllFiles() {
-
-        File("src/test/resources").walk().filter { it.name.endsWith(".gpx") }.forEach {
-            println(it.absolutePath)
+    fun testEmptyGPX() {
+        val parser = Parser()
+        val exception = assertThrows<Exception> {
+            parser.parse("src/test/resources/empty.gpx")
         }
+        assertThat(exception.message).isEqualTo("Empty GPX document")
+    }
 
+    @Test
+    fun testNotAGPXFile() {
+        val parser = Parser()
+        val exception = assertThrows<Exception> {
+            parser.parse("src/test/resources/no_gpx.gpx")
+        }
+        assertThat(exception.message).isEqualTo("Not a GPX document")
     }
 
 }
