@@ -5,9 +5,10 @@ data class Track(
     val segments: MutableList<Segment> = mutableListOf()
 ) {
 
-    fun distance(): Distance {
-        return Distance(segments.sumOf { it.distance().meters() })
-    }
+    val distance: Distance
+        get() {
+            return Distance(segments.sumOf { it.distance.meters })
+        }
 
     fun toPolyline(): String {
         val coords: MutableList<TrackPoint> = mutableListOf()

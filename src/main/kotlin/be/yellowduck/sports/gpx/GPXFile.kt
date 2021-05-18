@@ -12,9 +12,10 @@ data class GPXFile(
     var tracks: MutableList<Track> = mutableListOf()
 ) {
 
-    fun distance(): Distance {
-        return Distance(tracks.sumOf { it.distance().meters() })
-    }
+    val distance: Distance
+        get() {
+            return Distance(tracks.sumOf { it.distance.meters })
+        }
 
     fun toStream(stream: OutputStream) {
 

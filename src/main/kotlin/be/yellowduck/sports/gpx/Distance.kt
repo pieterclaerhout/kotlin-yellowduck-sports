@@ -9,16 +9,8 @@ data class Distance(
         const val metersPerMile = 1609.0
     }
 
-    fun meters(): Double {
-        return lengthInMeters
-    }
-
-    fun kilometers(): Double {
-        return lengthInMeters / metersPerKilometer
-    }
-
-    fun miles(): Double {
-        return lengthInMeters / metersPerMile
-    }
+    var meters: Double = lengthInMeters
+    var kilometers: Double =  lengthInMeters / metersPerKilometer
+    var miles: Double =  lengthInMeters / metersPerMile
 
 }

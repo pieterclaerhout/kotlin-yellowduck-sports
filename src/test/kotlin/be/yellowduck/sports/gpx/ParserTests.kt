@@ -18,10 +18,10 @@ class ParserTests {
         assertThat(gpx.tracks).isNotNull
         assertThat(gpx.tracks.size).isEqualTo(1)
 
-        val distance = gpx.distance()
-        assertThat(distance.meters()).isEqualTo(95997.70371545701)
-        assertThat(distance.kilometers()).isEqualTo(95.99770371545701)
-        assertThat(distance.miles()).isEqualTo(59.66296066840088)
+        val distance = gpx.distance
+        assertThat(distance.meters).isEqualTo(95997.70371545701)
+        assertThat(distance.kilometers).isEqualTo(95.99770371545701)
+        assertThat(distance.miles).isEqualTo(59.66296066840088)
 
         val track = gpx.tracks.first()
         assertThat(track.name).isEqualTo("Gravelgrinders Gent 4")
