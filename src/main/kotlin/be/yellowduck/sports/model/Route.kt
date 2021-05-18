@@ -1,6 +1,6 @@
 package be.yellowduck.sports.model
 
-import be.yellowduck.sports.gpx.Polyline
+import be.yellowduck.gpx.Polyline
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import kotlinx.serialization.SerialName
