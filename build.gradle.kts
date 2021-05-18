@@ -28,7 +28,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
 //	implementation(project(":kotlin-yellowduck-gpx"))
-	implementation("be.yellowduck.sports.gpx:lib:1.0-SNAPSHOT")
+	implementation("be.yellowduck.sports:gpx:1.0-SNAPSHOT")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("org.postgresql:postgresql")

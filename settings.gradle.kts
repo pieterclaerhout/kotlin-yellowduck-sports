@@ -1,5 +1,5 @@
 //include(":kotlin-yellowduck-gpx")
-includeBuild("./../kotlin-yellowduck-gpx/lib")
+includeBuild("./../kotlin-yellowduck-gpx")
 
 rootProject.name = "yellowduck-sports"
 
