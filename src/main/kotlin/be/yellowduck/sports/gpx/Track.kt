@@ -1,7 +1,5 @@
 package be.yellowduck.sports.gpx
 
-import be.yellowduck.sports.gpx.Polyline
-
 data class Track(
     val name: String = "",
     val segments: MutableList<Segment> = mutableListOf()

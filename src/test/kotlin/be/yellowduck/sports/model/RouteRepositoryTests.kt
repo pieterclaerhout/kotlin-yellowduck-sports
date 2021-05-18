@@ -1,7 +1,7 @@
 package be.yellowduck.sports.model
 
-import be.yellowduck.sports.gpx.TrackPoint
 import be.yellowduck.sports.gpx.Polyline
+import be.yellowduck.sports.gpx.TrackPoint
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.assertj.core.api.Assertions.assertThat

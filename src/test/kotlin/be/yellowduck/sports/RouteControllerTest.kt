@@ -1,7 +1,7 @@
 package be.yellowduck.sports
 
-import be.yellowduck.sports.gpx.TrackPoint
 import be.yellowduck.sports.gpx.Polyline
+import be.yellowduck.sports.gpx.TrackPoint
 import be.yellowduck.sports.model.Route
 import be.yellowduck.sports.model.RouteRepository
 import com.ninjasquad.springmockk.MockkBean

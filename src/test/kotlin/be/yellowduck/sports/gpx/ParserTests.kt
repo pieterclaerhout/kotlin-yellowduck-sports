@@ -12,9 +12,7 @@ class ParserTests {
 
         val path = "src/test/resources/Gravelgrinders_Gent_4.gpx"
 
-        val parser = Parser()
-
-        val gpx = parser.parse(path)
+        val gpx = GPX.parse(path)
         assertThat(gpx.version).isEqualTo("1.1")
         assertThat(gpx.creator).isEqualTo("StravaGPX")
         assertThat(gpx.tracks).isNotNull
@@ -35,27 +33,18 @@ class ParserTests {
 
     }
 
-//    @Test
-//    fun testAllFiles() {
-//        File("src/test/resources").walk().filter { it.name.endsWith(".gpx") }.forEach {
-//            println(it.absolutePath)
-//        }
-//    }
-
     @Test
     fun testEmptyGPX() {
-        val parser = Parser()
         val exception = assertThrows<Exception> {
-            parser.parse("src/test/resources/empty.gpx")
+            GPX.parse("src/test/resources/empty.gpx")
         }
         assertThat(exception.message).isEqualTo("Empty GPX document")
     }
 
     @Test
     fun testNotAGPXFile() {
-        val parser = Parser()
         val exception = assertThrows<Exception> {
-            parser.parse("src/test/resources/no_gpx.gpx")
+            GPX.parse("src/test/resources/no_gpx.gpx")
         }
         assertThat(exception.message).isEqualTo("Not a GPX document")
     }

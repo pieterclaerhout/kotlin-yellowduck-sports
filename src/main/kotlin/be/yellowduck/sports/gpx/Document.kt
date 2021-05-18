@@ -5,10 +5,9 @@ import java.io.ByteArrayOutputStream
 import javax.xml.stream.XMLOutputFactory
 
 data class Document(
-    val path: String = "",
     var name: String = "",
-    var version: String = "",
-    var creator: String = "",
+    var version: String = "1.1",
+    var creator: String = "sports.yellowduck.be",
     var tracks: MutableList<Track> = mutableListOf()
 ) {
 
