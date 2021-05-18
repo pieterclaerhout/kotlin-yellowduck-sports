@@ -12,14 +12,14 @@ class GPX {
 
     companion object {
 
-        fun parse(path: String): Document {
+        fun parse(path: String): GPXFile {
             val fis = FileInputStream(path)
             return parse(fis)
         }
 
-        fun parse(inputStream: InputStream): Document {
+        fun parse(inputStream: InputStream): GPXFile {
 
-            val gpx = Document()
+            val gpx = GPXFile()
 
             val dbFactory = DocumentBuilderFactory.newInstance()
             val dBuilder = dbFactory.newDocumentBuilder()

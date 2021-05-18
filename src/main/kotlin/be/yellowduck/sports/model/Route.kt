@@ -21,7 +21,7 @@ data class Route(
 ) {
 
     fun toGPX(): String {
-        return Polyline.decodeToGPX(polyline, name).toGPXString()
+        return Polyline.decodeToGPX(polyline, name).toString()
     }
 
 }

@@ -2,18 +2,18 @@ package be.yellowduck.sports.gpx
 
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter
 import java.io.ByteArrayOutputStream
+import java.io.OutputStream
 import javax.xml.stream.XMLOutputFactory
 
-data class Document(
+data class GPXFile(
     var name: String = "",
     var version: String = "1.1",
     var creator: String = "sports.yellowduck.be",
     var tracks: MutableList<Track> = mutableListOf()
 ) {
 
-    fun toGPXString(): String {
+    fun toStream(stream: OutputStream) {
 
-        var stream = ByteArrayOutputStream()
         val writer = IndentingXMLStreamWriter(XMLOutputFactory.newFactory().createXMLStreamWriter(stream, "UTF-8"))
 
         writer.setIndentStep("  ")
@@ -58,8 +58,12 @@ data class Document(
 
         writer.flush()
 
-        return stream.toString("UTF-8")
+    }
 
+    override fun toString(): String {
+        var stream = ByteArrayOutputStream()
+        toStream(stream)
+        return stream.toString("UTF-8")
     }
 
 }

@@ -69,7 +69,7 @@ class PolylineTests {
         val polyline = "smdeH_mwbBsAiKkbEmfK"
 
         val gpx = Polyline.decodeToGPX(polyline, "my route")
-        assertThat(gpx.toGPXString()).isEqualTo("""<?xml version="1.0" ?>
+        assertThat(gpx.toString()).isEqualTo("""<?xml version="1.0" ?>
 <gpx version="1.1" creator="sports.yellowduck.be" xmlns="http://www.topografix.com/GPX/1/1">
   <metadata>
     <name>my route</name>

@@ -45,11 +45,11 @@ class Polyline {
             return chunks
         }
 
-        fun decodeToGPX(polyline: String, name: String=""): Document{
+        fun decodeToGPX(polyline: String, name: String=""): GPXFile{
             val points = decode(polyline)
             val segment = Segment(points = points.toMutableList())
             val track = Track(name = name, segments = mutableListOf(segment))
-            return Document(name = name, tracks = mutableListOf(track))
+            return GPXFile(name = name, tracks = mutableListOf(track))
         }
 
         fun decode(polyline: String): List<TrackPoint> {
