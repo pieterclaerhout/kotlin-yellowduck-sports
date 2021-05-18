@@ -16,6 +16,7 @@ data class Route(
     @SerialName("token_id") @JsonProperty("token_id") val tokenId: Long,
     val name: String,
     val sport: String,
+    val distance: Double = 0.0,
     @Transient @JsonIgnore val polyline: String = "",
     @SerialName("changed_at") @JsonProperty("changed_at") val changedAt: LocalDateTime = LocalDateTime.now()
 ) {

@@ -1,30 +1,25 @@
 package be.yellowduck.sports
 
 import be.yellowduck.sports.model.RouteRepository
-import org.springframework.http.HttpStatus
+import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
+import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.server.ResponseStatusException
 
-@RestController
-@RequestMapping("/api/route")
+@Controller
 class RouteController(private val repository: RouteRepository) {
 
-    @GetMapping("/all")
-    fun findAll() = repository.findAllByOrderByChangedAtDesc()
+    @GetMapping("/")
+    fun all(model: Model): String {
 
-    @GetMapping("/{id}")
-    fun findOne(@PathVariable id: Long) =
-        repository.findById(id).or {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "This route does not exist")
-        }
+        val routes = repository.findAllByOrderByChangedAtDesc()
 
-    @GetMapping("/{id}/gpx", produces = arrayOf("application/gpx+xml"))
-    fun findOneGPX(@PathVariable id: Long) =
-        repository.findById(id).or {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, "This route does not exist")
-        }.get().toGPX()
+        model["title"] = "My Routes"
+        model["routes"] = routes
+        model["totalCount"] = routes.count()
+
+        return "routes"
+
+    }
 
 }

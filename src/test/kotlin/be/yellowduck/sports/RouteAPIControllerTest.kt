@@ -19,7 +19,7 @@ import java.time.ZoneOffset
 import java.util.*
 
 @WebMvcTest
-class RouteControllerTest(@Autowired val mockMvc: MockMvc) {
+class RouteAPIControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @MockkBean
     private lateinit var routeRepository: RouteRepository
