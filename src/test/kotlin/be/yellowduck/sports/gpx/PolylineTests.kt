@@ -13,7 +13,7 @@ class PolylineTests {
         val coordinate = TrackPoint(lon = 16.34528, lat = 48.1969)
         val coordinateJson = Json.encodeToString(coordinate)
 
-        assertThat(coordinateJson).isEqualTo("""{"lon":16.34528,"lat":48.1969}""")
+        assertThat(coordinateJson).isEqualTo("""{"lat":48.1969,"lon":16.34528}""")
 
     }
 
@@ -27,8 +27,8 @@ class PolylineTests {
 
         assertThat(coordinateJson).isEqualTo(
             """{
-    "lon": 16.34528,
-    "lat": 48.1969
+    "lat": 48.1969,
+    "lon": 16.34528
 }"""
         )
 

@@ -12,6 +12,10 @@ data class GPXFile(
     var tracks: MutableList<Track> = mutableListOf()
 ) {
 
+    fun distance(): Distance {
+        return Distance(tracks.sumOf { it.distance().meters() })
+    }
+
     fun toStream(stream: OutputStream) {
 
         val writer = IndentingXMLStreamWriter(XMLOutputFactory.newFactory().createXMLStreamWriter(stream, "UTF-8"))
