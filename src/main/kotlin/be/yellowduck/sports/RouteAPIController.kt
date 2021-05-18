@@ -1,7 +1,9 @@
 package be.yellowduck.sports
 
 import be.yellowduck.sports.model.RouteRepository
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -25,9 +27,17 @@ class RouteAPIController(private val repository: RouteRepository) {
         "/{id}/gpx",
         produces = arrayOf("application/gpx+xml")
     )
-    fun findOneGPX(@PathVariable id: Long) =
-        repository.findById(id).or {
+    fun findOneGPX(@PathVariable id: Long) : ResponseEntity<String> {
+
+        val route =repository.findById(id).or {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "This route does not exist")
-        }.get().toGPX()
+        }.get()
+
+        val headers = HttpHeaders()
+        headers.add("Content-Disposition", "Attachment; filename=${id}_${route.name.toSlug()}.gpx")
+
+        return ResponseEntity<String>(route.toGPX(), headers, HttpStatus.OK)
+
+    }
 
 }
