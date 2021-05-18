@@ -15,15 +15,6 @@ jobs:
 
       - name: Checkout main repo
         uses: actions/checkout@v2
-        with:
-          path: kotlin-yellowduck-sports
-
-      - name: Checkout gpx repo
-        uses: actions/checkout@v2
-        with:
-          repository: pieterclaerhout/kotlin-yellowduck-gpx
-          path: kotlin-yellowduck-gpx
-
 
       - name: Set up JDK 11
         uses: actions/setup-java@v2
@@ -32,7 +23,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Grant execute permission for gradlew
-        run: cd kotlin-yellowduck-sports && chmod +x gradlew
+        run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: cd kotlin-yellowduck-sports && ./gradlew build --scan
+        run: ./gradlew build --scan
