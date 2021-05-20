@@ -6,8 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Transient
+import org.hibernate.annotations.Type
 import java.time.LocalDateTime
-import javax.persistence.*
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
 
 @Entity(name = "routes")
 //@EntityListeners(RouteAuditTrailListener::class)
@@ -20,16 +23,13 @@ data class Route(
     @JsonProperty("token_id")
     val tokenId: Long,
 
+//    @Type(type = "be.yellowduck.sports.model.PhoneNumberType")
     val name: String,
 
     val sport: String,
 
-//    @Type(type = "be.yellowduck.sports.model.DistanceType")
-    val distance: Double = 0.0,
-
-//    @Transient
-//    @JsonIgnore
-//    var distanceObject: Distance = Distance(0.0),
+    @Type(type = "be.yellowduck.sports.model.DistanceType")
+    val distance: Distance = Distance(0.0),
 
     @Transient
     @JsonIgnore
@@ -43,11 +43,6 @@ data class Route(
     fun toGPX(): String {
         return Polyline.decodeToGPX(polyline, name).toString()
     }
-
-    val formattedKilometers: String
-        get() {
-            return Distance(distance).formattedKilometers
-        }
 
 //    @PostLoad
 //    fun onPostLoad() {
