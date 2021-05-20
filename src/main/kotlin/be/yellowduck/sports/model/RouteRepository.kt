@@ -15,4 +15,7 @@ interface RouteRepository : CrudRepository<Route, Long> {
     @Query("SELECT count(*) FROM routes WHERE token_id = ?1")
     fun findTotalRouteCount(tokenId: Long): Long
 
+    @Query("SELECT r FROM routes r WHERE r.distance BETWEEN ?1 AND ?2")
+    fun findAllWithDistanceRange(minDistance: Double, maxDistance: Double) : Iterable<Route>
+
 }

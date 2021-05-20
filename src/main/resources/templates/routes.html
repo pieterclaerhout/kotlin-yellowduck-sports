@@ -24,7 +24,7 @@
     <tr th:each="route: ${routes}">
         <td><a th:href="@{/api/route/{routeId}/gpx(routeId=${route.id})}" th:text="${route.name}">My Route</a></td>
         <td th:text="${route.sport}">Sport</td>
-        <td th:text="${#numbers.formatDecimal(route.distance / 1000, 1, 2)}">200.34 km</td>
+        <td th:text="${route.formattedKilometers}">200.34 km</td>
     </tr>
     </tbody>
 </table>
